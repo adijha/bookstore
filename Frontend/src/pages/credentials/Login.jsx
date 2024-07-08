@@ -1,108 +1,169 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import './Credentials.css';
-import { toast } from 'react-toastify';
-import { useAuth } from '../../store/Auth';
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { useAuth } from '../../store/Auth'
+import { LogIn } from 'lucide-react'
 
-const URL = 'http://localhost:9000/api/v1/bookstore/login';
+const URL = 'http://localhost:9000/api/v1/bookstore/login'
 
 const Login = () => {
-    const [userLogin, setUserLogin] = useState({
-        email: '',
-        password: '',
-    });
+	const [userLogin, setUserLogin] = useState({
+		email: '',
+		password: '',
+	})
 
-    const navigate = useNavigate();
-    const { storeTokenInLS } = useAuth();
+	const navigate = useNavigate()
+	const { storeTokenInLS, themeColor } = useAuth()
 
-    const handleInput = (e) => {
-        const { name, value } = e.target;
-        setUserLogin(prevState => ({
-            ...prevState,
-            [name]: value,
-        }));
-    };
+	const handleInput = (e) => {
+		const { name, value } = e.target
+		setUserLogin((prevState) => ({
+			...prevState,
+			[name]: value,
+		}))
+	}
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        
-        try {
-            const response = await fetch(URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(userLogin),
-            });
+	const handleSubmit = async (e) => {
+		e.preventDefault()
 
-            const data = await response.json();
+		try {
+			const response = await fetch(URL, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(userLogin),
+			})
 
-            if (response.ok) {
-                storeTokenInLS(data.token);
+			const data = await response.json()
 
-                setUserLogin({
-                    email: '',
-                    password: '',
-                });
+			if (response.ok) {
+				storeTokenInLS(data.token)
 
-                toast.success('Login Successful', {
-                    autoClose: 1000,
-                });
+				setUserLogin({
+					email: '',
+					password: '',
+				})
 
-                navigate('/');
-            } else {
-                toast.error(data.message || 'Login failed', {
-                    autoClose: 3000,
-                });
-            }
-        } catch (error) {
-            console.error('Login Error:', error);
-            toast.error('An error occurred. Please try again.', {
-                autoClose: 3000,
-            });
-        }
-    };
+				toast.success('Login Successful', {
+					autoClose: 1000,
+				})
 
-    return (
-        <div className="credentialsSection login">
-            <h2>Sign In</h2>
-            <p>Please Login To Continue</p>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus
-                perferendis magnam soluta eum sequi officiis adipisci laboriosam,
-                aliquid vel sed autem expedita molestias esse. Ullam explicabo
-                recusandae voluptatibus! Voluptatem, ab.
-            </p>
+				navigate('/')
+			} else {
+				toast.error(data.message || 'Login failed', {
+					autoClose: 3000,
+				})
+			}
+		} catch (error) {
+			console.error('Login Error:', error)
+			toast.error('An error occurred. Please try again.', {
+				autoClose: 3000,
+			})
+		}
+	}
 
-            <div className="loginForm">
-                <form onSubmit={handleSubmit}>
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="Email"
-                        required
-                        onChange={handleInput}
-                        value={userLogin.email}
-                    />
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        required
-                        onChange={handleInput}
-                        value={userLogin.password}
-                    />
-                    <p>
-                        Not Registered? <Link to="/register">Register Now</Link>
-                    </p>
+	return (
+		<div
+			className={`min-h-screen flex items-center justify-center p-4 ${
+				themeColor === 'dark' ? 'bg-gray-800' : 'bg-secondary'
+			}`}
+		>
+			<div
+				className={`rounded-lg shadow-md p-8 max-w-lg w-full ${
+					themeColor === 'dark' ? 'bg-gray-900 text-white' : 'bg-white'
+				}`}
+			>
+				<div className="flex justify-between items-center mb-6">
+					<h2
+						className={`text-3xl font-bold ${
+							themeColor === 'dark' ? 'text-white' : 'text-gray-800'
+						}`}
+					>
+						Sign In
+					</h2>
+					<LogIn size={32} className="text-primary" />
+				</div>
+				<p
+					className={`mb-8 ${
+						themeColor === 'dark' ? 'text-gray-300' : 'text-gray-600'
+					}`}
+				>
+					Please login to continue
+				</p>
 
-                    <div>
-                        <input type="submit" value="Login" className="btn" />
-                    </div>
-                </form>
-            </div>
-        </div>
-    );
-};
+				<form onSubmit={handleSubmit} className="space-y-6">
+					<div>
+						<label
+							htmlFor="email"
+							className={`block text-sm font-medium mb-1 ${
+								themeColor === 'dark' ? 'text-gray-300' : 'text-gray-700'
+							}`}
+						>
+							Email
+						</label>
+						<input
+							type="email"
+							id="email"
+							name="email"
+							placeholder="Enter your email"
+							required
+							onChange={handleInput}
+							value={userLogin.email}
+							className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary ${
+								themeColor === 'dark'
+									? 'bg-gray-800 border-gray-700 text-gray-300'
+									: 'border-gray-300'
+							}`}
+						/>
+					</div>
+					<div>
+						<label
+							htmlFor="password"
+							className={`block text-sm font-medium mb-1 ${
+								themeColor === 'dark' ? 'text-gray-300' : 'text-gray-700'
+							}`}
+						>
+							Password
+						</label>
+						<input
+							type="password"
+							id="password"
+							name="password"
+							placeholder="Enter your password"
+							required
+							onChange={handleInput}
+							value={userLogin.password}
+							className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary ${
+								themeColor === 'dark'
+									? 'bg-gray-800 border-gray-700 text-gray-300'
+									: 'border-gray-300'
+							}`}
+						/>
+					</div>
+					<p
+						className={`text-sm ${
+							themeColor === 'dark' ? 'text-gray-300' : 'text-gray-600'
+						}`}
+					>
+						Not Registered?{' '}
+						<Link to="/register" className="text-primary hover:underline">
+							Register Now
+						</Link>
+					</p>
+					<div>
+						<button
+							type="submit"
+							className="w-full bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded-md transition duration-300 flex items-center justify-center"
+						>
+							<LogIn size={18} className="mr-2" />
+							Login
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	)
+}
 
-export default Login;
+export default Login

@@ -11,9 +11,7 @@ const App = () => {
 		<>
 			<div className="appCont" data-theme={themeColor}>
 				<Navbar />
-				<div className="container">
-					<Outlet />
-				</div>
+				<Outlet />
 				<Footer />
 			</div>
 		</>

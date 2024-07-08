@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../store/Auth';
-
+import { ShoppingCart } from 'lucide-react';
 
 const Home = () => {
   const [books, setBooks] = useState([]);
   const navigate = useNavigate();
-  const { getToken } = useAuth();
+  const { getToken, themeColor } = useAuth();
 
   useEffect(() => {
     fetchBooks();
@@ -42,9 +42,9 @@ const Home = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ bookId, quantity: 1 })
+        body: JSON.stringify({ bookId, quantity: 1 }),
       });
 
       if (response.ok) {
@@ -62,31 +62,42 @@ const Home = () => {
   };
 
   return (
-    <div className="homeCardSection">
-      <h1>Welcome to BookStore</h1>
-      <p>
-        Discover a world of knowledge and imagination in our curated collection of books.
-        From bestsellers to hidden gems, find your next great read here!
-      </p>
-      <div className="cardBox grid gridFourTemplate">
-        {books.map((book) => (
-          <div key={book._id} className="card">
-            <div className="bookImage">
-              <img src={book.imageUrl || `https://source.unsplash.com/random/200x300?book&sig=${book._id}`} alt={book.title} />
+    <div className={`min-h-screen ${themeColor === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-black'}`}>
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-4xl font-bold mb-4">Welcome to BookStore</h1>
+        <p className="text-lg mb-8">
+          Discover a world of knowledge and imagination in our curated collection of books.
+          From bestsellers to hidden gems, find your next great read here!
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {books.map((book) => (
+            <div
+              key={book._id}
+              className={`rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105 ${themeColor === 'dark' ? 'bg-gray-700' : 'bg-white'}`}
+            >
+              <img
+                src={book.imageUrl || `https://source.unsplash.com/random/300x400?book&sig=${book._id}`}
+                alt={book.title}
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-4">
+                <h3 className="text-xl font-semibold mb-2">{book.title}</h3>
+                <p className="mb-2">{book.author}</p>
+                <p className="text-sm mb-4">{book.description.substring(0, 100)}...</p>
+                <div className="flex justify-between items-center">
+                  <span className="text-lg font-bold">${book.price.toFixed(2)}</span>
+                  <button
+                    onClick={() => handleAddToCart(book._id)}
+                    className="bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded-full transition duration-300 flex items-center"
+                  >
+                    <ShoppingCart size={18} className="mr-2" />
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
             </div>
-            <div className="bookInfo">
-              <h3>{book.title}</h3>
-              <p>{book.author}</p>
-            </div>
-            <div className="bookDescription">
-              <p>{book.description.substring(0, 100)}...</p>
-            </div>
-            <div className="bookActions">
-              <span>${book.price.toFixed(2)}</span>
-              <button onClick={() => handleAddToCart(book._id)}>Add to Cart</button>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

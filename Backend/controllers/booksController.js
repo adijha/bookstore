@@ -4,7 +4,6 @@ const User = require('../model/userSchema')
 
 // Get all books for homepage
 const getAllBooks = async (req, res) => {
-	console.log('req')
 	try {
 		const books = await Book.find().select(
 			'title author price imageUrl description'

@@ -15,7 +15,7 @@ const userSchema = new mongoose.Schema({
 		type: String,
 		require: true,
 	},
-	myBooks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Book' }]
+	myBooks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Book' }],
 })
 
 userSchema.pre('save', async function (next) {

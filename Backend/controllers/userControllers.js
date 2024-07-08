@@ -64,7 +64,6 @@ const login = async (req, resp) => {
 }
 
 const getMyBooks = async (req, res) => {
-	console.log('iiii')
 	try {
 		const userId = req.user.id
 

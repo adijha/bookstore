@@ -1,65 +1,53 @@
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
-  }
-  
-  
-  html{
-    font-size: 62.5% ;
-  }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	font-family: Arial, Helvetica, sans-serif;
+}
 
+html {
+	font-size: 62.5%;
+}
 
-  
-  /* ------------------------------------------------------------ Container ----------------------------------------------------------------- */
-  
-  .container{
-    padding-left: 10%;
-    padding-right: 10%;
-    /* border: 1px solid red; */
-  }
+.container {
+	padding-left: 10%;
+	padding-right: 10%;
+	/* border: 1px solid red; */
+}
 
-  /* ------------------------------------------------------------End:  Container ----------------------------------------------------------------- */
+/* ------------------------------------------------------------End:  Container ----------------------------------------------------------------- */
 
-  /* ------------------------------------------------------------ grid ----------------------------------------------------------------- */
-  
-  
-  .grid{
-    display: grid;
-  }
-  
-  .gridTwoTemplate{
-    grid-template-columns: repeat(2,1fr);
-  }
-  .gridThreeTemplate{
-    grid-template-columns: repeat(3,1fr);
-  }
-  
-  .gridFourTemplate{
-    grid-template-columns: repeat(4, 1fr);
-  }
-  
-  /* ------------------------------------------------------------End:  grid ----------------------------------------------------------------- */
+/* ------------------------------------------------------------ grid ----------------------------------------------------------------- */
 
+.grid {
+	display: grid;
+}
 
-  /* ------------------------------------------------------------ Common Syntax ----------------------------------------------------------------- */
-  
+.gridTwoTemplate {
+	grid-template-columns: repeat(2, 1fr);
+}
+.gridThreeTemplate {
+	grid-template-columns: repeat(3, 1fr);
+}
 
-  a{
-    text-decoration: none;
-  }
-  
-  li{
-    list-style-type: none;
-  }
+.gridFourTemplate {
+	grid-template-columns: repeat(4, 1fr);
+}
 
-  /* ------------------------------------------------------------ End: Common Syntax ----------------------------------------------------------------- */
+/* ------------------------------------------------------------End:  grid ----------------------------------------------------------------- */
 
-  
-  
-  
+/* ------------------------------------------------------------ Common Syntax ----------------------------------------------------------------- */
 
-  
-  
+a {
+	text-decoration: none;
+}
+
+li {
+	list-style-type: none;
+}
+
+/* ------------------------------------------------------------ End: Common Syntax ----------------------------------------------------------------- */
