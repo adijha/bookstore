@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import './cart.css'
-import image from '../../assets/bookImage.jpg'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../store/Auth'
 import { ShoppingCart, Trash2 } from 'lucide-react'
+import { toast } from 'react-toastify'
 
-const CartItem = ({ name, price, quantity }) => (
+const CartItem = ({ name, price, quantity, onRemove }) => (
 	<div className="cart-item">
 		<div className="cart-item-details">
 			<h3>{name}</h3>
@@ -13,53 +13,106 @@ const CartItem = ({ name, price, quantity }) => (
 		</div>
 		<div className="cart-item-actions">
 			<span className="cart-item-price">${price.toFixed(2)}</span>
-			<button className="remove-item">
+			<button className="remove-item" onClick={onRemove}>
 				<Trash2 size={18} />
 			</button>
 		</div>
 	</div>
 )
-const Coures = () => {
-	const [course, setCourse] = useState([])
 
-	const { isLoggedIn } = useAuth()
+const CartPage = () => {
+	const [cartItems, setCartItems] = useState([])
+	const { isLoggedIn, getToken } = useAuth()
+	const navigate = useNavigate()
 
 	if (!isLoggedIn) {
 		return <Navigate to="/login" />
 	}
 
-	const useService = async () => {
+	const fetchCartItems = async () => {
 		try {
 			const response = await fetch(
-				'http://localhost:9000/api/v1/bookstore/course',
+				'http://localhost:9000/api/v1/bookstore/cart',
 				{
 					method: 'GET',
+					headers: {
+						Authorization: `Bearer ${getToken()}`,
+					},
 				}
 			)
 
 			if (response.ok) {
-				const courseData = await response.json()
-
-				setCourse(courseData)
+				const data = await response.json()
+				setCartItems(data)
+			} else {
+				toast.error('Failed to fetch cart items')
 			}
 		} catch (error) {
-			console.log('course page :  ', error)
+			console.error('Error fetching cart items:', error)
+			toast.error('An error occurred while fetching cart items')
 		}
 	}
 
-	// automatically run this function
 	useEffect(() => {
-		useService()
+		fetchCartItems()
 	}, [])
 
-	const cartItems = [
-		{ name: 'Book 1', price: 19.99, quantity: 1 },
-		{ name: 'Book 2', price: 29.99, quantity: 2 },
-		{ name: 'Book 3', price: 14.99, quantity: 1 },
-	]
+	const removeFromCart = async (itemId) => {
+		try {
+			const response = await fetch(
+				`http://localhost:9000/api/v1/bookstore/cart/remove/${itemId}`,
+				{
+					method: 'DELETE',
+					headers: {
+						Authorization: `Bearer ${getToken()}`,
+					},
+				}
+			)
+
+			if (response.ok) {
+				setCartItems(cartItems.filter((item) => item._id !== itemId))
+				toast.success('Item removed from cart')
+			} else {
+				toast.error('Failed to remove item from cart')
+			}
+		} catch (error) {
+			console.error('Error removing item from cart:', error)
+			toast.error('An error occurred while removing the item')
+		}
+	}
+
+	const handlePurchase = async () => {
+		try {
+			const response = await fetch(
+				'http://localhost:9000/api/v1/bookstore/purchase',
+				{
+					method: 'POST',
+					headers: {
+						Authorization: `Bearer ${getToken()}`,
+						'Content-Type': 'application/json',
+					},
+				}
+			)
+
+			if (response.ok) {
+				const data = await response.json()
+				console.log('Purchase response:', data) // Log the response
+				setCartItems([])
+				toast.success('Purchase successful! Books added to your collection.')
+				navigate('/my-books')
+			} else {
+				const errorData = await response.json()
+				console.error('Purchase failed:', errorData) // Log the error
+				toast.error('Failed to complete the purchase: ' + errorData.message)
+			}
+		} catch (error) {
+			console.error('Error during purchase:', error)
+			toast.error('An error occurred during the purchase')
+		}
+	}
 
 	const total = cartItems.reduce(
-		(sum, item) => sum + item.price * item.quantity,
+		(sum, item) => sum + Number(item.book.price) * Number(item.quantity),
 		0
 	)
 
@@ -73,17 +126,25 @@ const Coures = () => {
 				Review your items and proceed to checkout when you're ready.
 			</p>
 			<div className="cart-items">
-				{cartItems.map((item, index) => (
-					<CartItem key={index} {...item} />
+				{cartItems.map((item) => (
+					<CartItem
+						key={item._id}
+						name={item.book.title}
+						price={item.book.price}
+						quantity={item.quantity}
+						onRemove={() => removeFromCart(item._id)}
+					/>
 				))}
 			</div>
 			<div className="cart-total">
 				<span>Total:</span>
 				<span>${total.toFixed(2)}</span>
 			</div>
-			<button className="checkout-button">Purchase</button>
+			<button className="checkout-button" onClick={handlePurchase}>
+				Purchase
+			</button>
 		</div>
 	)
 }
 
-export default Coures
+export default CartPage
