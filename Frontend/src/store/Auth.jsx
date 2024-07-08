@@ -1,57 +1,52 @@
-// TODO: ============================================================= WAREHOUSE ============================================================
+import { createContext, useContext, useEffect, useState } from 'react'
 
-import { createContext, useContext, useEffect, useState } from "react";
+export const AuthContext = createContext()
 
-// context
-export const AuthContext = createContext();
-
-//Provider
 export const AuthProvider = ({ children }) => {
-  // store token
-  const [token, setToken] = useState(localStorage.getItem("tokenBookStore"));
+	const [token, setToken] = useState(localStorage.getItem('tokenBookStore'))
+	const [themeColor, setThemeColor] = useState('light')
 
-  // ?-------------------------------------------------------------- Theme -------------------------------------------------------
-  const [themeColor, setThemeColor] = useState("light");
+	const theme = () => {
+		setThemeColor(themeColor === 'light' ? 'dark' : 'light')
+	}
 
-  const theme = () => {
-    setThemeColor(themeColor === "light" ? "dark" : "light");
-  };
+	const storeTokenInLS = (serverToken) => {
+		setToken(serverToken)
+		localStorage.setItem('tokenBookStore', serverToken)
+	}
 
-  //? ---------------------------------------------------------------End: Theme -----------------------------------------------
+	const logoutUser = () => {
+		setToken('')
+		localStorage.removeItem('tokenBookStore')
+	}
 
-  // definition of storeTokenINLS
-  const storeTokenInLS = (serverToken) => {
-    setToken(serverToken); // this is the problem and solution : L-37
+	const getToken = () => {
+		return token
+	}
 
-    localStorage.setItem("tokenBookStore", serverToken);
-    return;
-  };
+	let isLoggedIn = !!token
 
-  //? tackling the logout functionality
-  const logoutUser = () => {
-    setToken("");
-    localStorage.removeItem("tokenBookStore");
-    return;
-  };
+	return (
+		<AuthContext.Provider
+			value={{
+				theme,
+				themeColor,
+				logoutUser,
+				isLoggedIn,
+				storeTokenInLS,
+				getToken, // Add this new function
+				token, // Include the token in the context value
+			}}
+		>
+			{children}
+		</AuthContext.Provider>
+	)
+}
 
-  // User login or not
-  let isLoggedIn = !!token;
-
-  return (
-    <AuthContext.Provider
-      value={{ theme, themeColor, logoutUser, isLoggedIn, storeTokenInLS }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
-};
-
-// custom hook / function
 export const useAuth = () => {
-  const authContextValue = useContext(AuthContext);
-  if (!authContextValue) {
-    throw new Error("useAuth used outside of the Provider");
-  }
-
-  return authContextValue;
-};
+	const authContextValue = useContext(AuthContext)
+	if (!authContextValue) {
+		throw new Error('useAuth used outside of the Provider')
+	}
+	return authContextValue
+}

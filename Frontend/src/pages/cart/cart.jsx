@@ -5,19 +5,20 @@ import { Navigate } from 'react-router-dom'
 import { useAuth } from '../../store/Auth'
 import { ShoppingCart, Trash2 } from 'lucide-react'
 
-
 const CartItem = ({ name, price, quantity }) => (
-  <div className="cart-item">
-    <div className="cart-item-details">
-      <h3>{name}</h3>
-      <p>Quantity: {quantity}</p>
-    </div>
-    <div className="cart-item-actions">
-      <span className="cart-item-price">${price.toFixed(2)}</span>
-      <button className="remove-item"><Trash2 size={18} /></button>
-    </div>
-  </div>
-);
+	<div className="cart-item">
+		<div className="cart-item-details">
+			<h3>{name}</h3>
+			<p>Quantity: {quantity}</p>
+		</div>
+		<div className="cart-item-actions">
+			<span className="cart-item-price">${price.toFixed(2)}</span>
+			<button className="remove-item">
+				<Trash2 size={18} />
+			</button>
+		</div>
+	</div>
+)
 const Coures = () => {
 	const [course, setCourse] = useState([])
 
@@ -63,26 +64,26 @@ const Coures = () => {
 	)
 
 	return (
-    <div className="cart-container">
-      <div className="cart-header">
-        <h1>My Cart</h1>
-        <ShoppingCart size={24} />
-      </div>
-      <p className="cart-description">
-        Review your items and proceed to checkout when you're ready.
-      </p>
-      <div className="cart-items">
-        {cartItems.map((item, index) => (
-          <CartItem key={index} {...item} />
-        ))}
-      </div>
-      <div className="cart-total">
-        <span>Total:</span>
-        <span>${total.toFixed(2)}</span>
-      </div>
-      <button className="checkout-button">Proceed to Checkout</button>
-    </div>
-  );
+		<div className="cart-container">
+			<div className="cart-header">
+				<h1>My Cart</h1>
+				<ShoppingCart size={24} />
+			</div>
+			<p className="cart-description">
+				Review your items and proceed to checkout when you're ready.
+			</p>
+			<div className="cart-items">
+				{cartItems.map((item, index) => (
+					<CartItem key={index} {...item} />
+				))}
+			</div>
+			<div className="cart-total">
+				<span>Total:</span>
+				<span>${total.toFixed(2)}</span>
+			</div>
+			<button className="checkout-button">Purchase</button>
+		</div>
+	)
 }
 
 export default Coures

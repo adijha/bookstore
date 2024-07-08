@@ -39,11 +39,10 @@ userSchema.pre("save", async function (next) {
 
 
 //? Compare the password
-//[compare : login password and register password]
-userSchema.methods.comparePassword = async function (password) {
-    return bcrypt.compare(password, this.password);
-}
-
+//[compare : login password and register password]\
+userSchema.methods.comparePassword = async function(candidatePassword) {
+    return bcrypt.compare(candidatePassword, this.password);
+};
 
 // JWT Logic
 //* return means : after run this methods return to authControllers.js and assign to token.

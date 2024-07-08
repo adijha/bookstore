@@ -3,6 +3,7 @@ const router = express.Router();
 
 // Controllers path
 const userControllers = require("../controllers/userControllers");
+const booksControllers = require("../controllers/booksController");
 
 // Validator path
 const userSchemaVal = require("../validator/userSchemaVal");
@@ -10,11 +11,16 @@ const loginSchemaVal = require("../validator/userLoginVal");
 
 // Middleware path
 const validate = require("../middleware/validateMiddleware");
+const authMiddleware = require("../middleware/authMiddleware");
+
 
 
 
 // home page
-router.route("/").get(userControllers.home);
+router.route("/books").get(booksControllers.getAllBooks);
+router.route("/cart/add").post(authMiddleware, booksControllers.addToCart);
+
+
 
 // register page
 router
