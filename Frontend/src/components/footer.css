@@ -1,0 +1,16 @@
+:root{
+    --footerBg-color:#fbc531;
+    --footerText-color: #fff;
+}
+
+
+.footerSection{
+    background-color: var(--navBg-color);
+    color: var(--footerText-color);
+    text-align: center;
+    padding: 2rem 0;
+}
+
+.footerSection h3{
+    font-size: 1.5rem;
+} 

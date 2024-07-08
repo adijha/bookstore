@@ -1,0 +1,21 @@
+
+/* when colorTheme is light */
+:root{
+    --body-bgColor: #fff;
+    /* bg color */
+    
+    --home-color: #000; 
+    /* text color */
+}
+
+
+/* when colorTheme is dark */
+[data-theme="dark"]{
+    --body-bgColor: #303952;
+    --home-color: #fff;
+}
+
+
+.appCont{
+   background-color: var(--body-bgColor);
+}

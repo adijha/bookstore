@@ -1,0 +1,61 @@
+.homeSection{
+    /* border: 1px solid blue; */
+    margin: 2rem auto 8rem auto;
+}
+
+/* .homeSection .firstSection{
+    border: 1px solid green;
+} */
+
+.homeSection .firstSection div:first-child{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.homeSection .firstSection div:first-child h1{
+    font-size: 4rem;
+    color: var(--home-color);
+}
+
+.homeSection .firstSection div:first-child h1 span:last-child{
+    color: #fbc531;
+}
+
+.homeSection .firstSection div:first-child p{
+    font-size: 1.35rem;
+    line-height: 1.8rem;
+    letter-spacing: .1rem;
+    margin: 3rem auto;
+    color: var(--home-color);
+}
+
+.homeSection .firstSection div:first-child button{
+    width: 20%;
+    height: 3.3rem;
+    border: none;
+    outline: none;
+    border-radius: 5rem;
+    -webkit-border-radius: 5rem;
+    -moz-border-radius: 5rem;
+    -ms-border-radius: 5rem;
+    -o-border-radius: 5rem;
+    cursor: pointer;
+    background-color: #fbc531;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--home-color);
+}
+
+.homeSection .firstSection div:last-child{
+    text-align: right;
+}
+
+.homeSection .firstSection div:last-child img{
+    width: 80%;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}

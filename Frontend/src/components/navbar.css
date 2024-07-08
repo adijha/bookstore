@@ -1,0 +1,56 @@
+:root{
+    --navBg-color:#fbc531;
+    --navList-color: #fff;
+}
+
+
+.navbar{
+    background-color: var(--navBg-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    /* by default width: 100% */
+}
+
+.navbar div h1{
+    font-size: 3rem;
+    color: var(--navList-color);
+}
+
+.navbar ul{
+    display: flex;
+    align-items: center;
+    gap: 5rem;
+}
+
+/* a (anchor tag) is equal to Link*/
+.navbar ul li a{
+    font-size: 1.5rem;
+    color: var(--navList-color);
+}
+
+.navbar .btn{
+    border: none;
+    background-color: #fff;
+    height: 3.3rem;
+    cursor: pointer;
+    padding: .3rem 1rem;
+    border-radius: 3rem;
+    -webkit-border-radius: 3rem;
+    -moz-border-radius: 3rem;
+    -ms-border-radius: 3rem;
+    -o-border-radius: 3rem;
+}
+
+.navbar ul .theme button{
+    border: none;
+    padding: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5rem;
+    -webkit-border-radius: 5rem;
+    -moz-border-radius: 5rem;
+    -ms-border-radius: 5rem;
+    -o-border-radius: 5rem;
+}

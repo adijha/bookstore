@@ -1,0 +1,116 @@
+.homeCardSection{
+    /* border: 1px solid fuchsia; */
+    /* margin-top: ; */
+    margin: 5rem auto;
+}
+
+.homeCardSection h1{
+    font-size: 2.5rem;
+}
+
+.homeCardSection p{
+    font-size: 1.3rem;
+    margin-top: 1rem;
+}
+
+.homeCardSection .cardBox{
+    margin-top: 3rem;
+}
+
+.homeCardSection .cardBox .card{
+   border: .2rem solid gray;
+   margin: 1rem ;
+   border-radius: 3rem;
+   -webkit-border-radius: 3rem;
+   -moz-border-radius: 3rem;
+   -ms-border-radius: 3rem;
+   -o-border-radius: 3rem;
+}
+
+.homeCardSection .cardBox .card div:nth-child(1) img{
+    width: 100%;
+    height: auto;
+    border-top-left-radius: 3rem;
+    border-top-right-radius: 3rem;
+}
+
+
+.homeCardSection .cardBox .card div:nth-child(2){
+   display: flex;
+   align-items: center;
+   gap: 1rem;
+   margin-top: 1rem;
+}
+
+.homeCardSection .cardBox .card div:nth-child(2) span:first-child{
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--home-color);
+}
+
+.homeCardSection .cardBox .card div:nth-child(2) span:last-child{
+    background-color: #e84393;
+    padding: .3rem 1rem;
+    font-weight: bold;
+    color: #fff;
+    font-size: 1rem;
+    border-radius: 5rem;
+    -webkit-border-radius: 5rem;
+    -moz-border-radius: 5rem;
+    -ms-border-radius: 5rem;
+    -o-border-radius: 5rem;
+}
+
+
+.homeCardSection .cardBox .card div:nth-child(3) p{
+    font-size: 1.3rem;
+    letter-spacing: .1rem;
+    line-height: 2rem;
+    color: var(--home-color);
+}
+
+
+.homeCardSection .cardBox .card div:nth-child(4){
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.homeCardSection .cardBox .card div:nth-child(4) span:first-child{
+    background-color: gray;
+    color: #fff;
+    padding: .3rem 1rem;
+    border-radius: 5rem;
+    font-size: 1.2rem;
+    -webkit-border-radius: 5rem;
+    -moz-border-radius: 5rem;
+    -ms-border-radius: 5rem;
+    -o-border-radius: 5rem;
+    color: var(--home-color);
+
+}
+
+.homeCardSection .cardBox .card div:nth-child(4) button{
+    border: 2px solid gray;
+    height: 3rem;
+    width: 10rem;
+    background-color: transparent;
+    border-radius: 5rem;
+    color: var(--home-color);
+    cursor: pointer;
+    font-size: 1.2rem;
+    -webkit-border-radius: 5rem;
+    -moz-border-radius: 5rem;
+    -ms-border-radius: 5rem;
+    -o-border-radius: 5rem;
+
+}
+
+.homeCardSection .cardBox .card div:nth-child(2),
+.homeCardSection .cardBox .card div:nth-child(3),
+.homeCardSection .cardBox .card div:nth-child(4){
+    margin-left: .5rem;
+    margin-right: .5rem;
+}
